@@ -7,11 +7,6 @@ type ExpandButtonProps = {
   children: React.ReactNode;
 };
 
-type DeleteButtonProps = {
-  id: number;
-  handleDeleteCard: (id: number) => void;
-};
-
 export const ExpandButton: FC<ExpandButtonProps> = ({
   isOpen,
   setIsOpen,
@@ -35,13 +30,52 @@ export const ExpandButton: FC<ExpandButtonProps> = ({
   );
 };
 
-export const DeleteButton: FC<DeleteButtonProps> = ({ id, handleDeleteCard }) => {
+type DeleteButtonProps = {
+  id: number;
+  handleDeleteCard: (id: number) => void;
+};
+
+export const DeleteButton: FC<DeleteButtonProps> = ({
+  id,
+  handleDeleteCard,
+}) => {
   return (
     <button
       className="hover:text-gray-700 transition-colors flex items-center justify-center"
-      onClick={(() => { handleDeleteCard (id)})}
+      onClick={() => {
+        handleDeleteCard(id);
+      }}
     >
       <XMarkIcon />
     </button>
   );
+};
+
+type ToggleButtonProps = {
+  isReveal: boolean;
+  deleteCardsLength: number;
+  handleReveal: () => void;
+};
+
+const genericButtonStyles =
+  "text-white text-sm transition-colors hover:bg-gray-800 disabled:bg-black/75 bg-black rounded px-3 py-1";
+
+export const ToggleButton: FC<ToggleButtonProps> = ({
+  isReveal,
+  deleteCardsLength,
+  handleReveal,
+}) => {
+  return (
+    <button
+      disabled={deleteCardsLength === 0 && true}
+      className={genericButtonStyles}
+      onClick={handleReveal}
+    >
+      {!isReveal ? "Reveal" : "Revert"}
+    </button>
+  );
+};
+
+export const RefreshButton = () => {
+  return <button className={genericButtonStyles}>Refresh</button>;
 };
