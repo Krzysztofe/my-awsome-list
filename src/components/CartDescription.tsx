@@ -3,15 +3,14 @@ import { FC } from "react";
 type DescriptionProps = {
   description: string;
   isOpen: boolean;
- 
 };
 
-const CartDescription: FC<DescriptionProps>  = ({description, isOpen}) => {
+const CartDescription: FC<DescriptionProps> = ({ description, isOpen }) => {
   return (
     <div
       className="grid"
       style={{
-        gridTemplateRows: isOpen ? "0fr" : "1fr",
+        gridTemplateRows: isOpen ? "1fr" : "0fr",
         transition: "grid-template-rows 0.5s",
       }}
     >

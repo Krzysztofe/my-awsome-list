@@ -8,10 +8,13 @@ import CartDescription from "./CartDescription";
 type CardProps = {
   title: ListItem["title"];
   description: ListItem["description"];
+  id: ListItem["id"];
+  handleDeleteCard: (id: number) => void;
 };
 
-export const Card: FC<CardProps> = ({ title, description }) => {
+export const Card: FC<CardProps> = ({ title, description, id, handleDeleteCard }) => {
   const [isOpen, setIsOpen] = useState(false);
+
 
   return (
     <div className="border border-black px-2 py-1.5 ">
@@ -21,7 +24,7 @@ export const Card: FC<CardProps> = ({ title, description }) => {
           <ExpandButton isOpen={isOpen} setIsOpen={setIsOpen}>
             <ChevronUpIcon />
           </ExpandButton>
-          <DeleteButton />
+          <DeleteButton id={id} handleDeleteCard={handleDeleteCard} />
         </div>
       </div>
       <CartDescription description={description} isOpen={isOpen} />
