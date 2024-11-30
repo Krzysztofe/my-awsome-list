@@ -13,6 +13,7 @@ type DeletedListItem = {
 export const Entrypoint = () => {
   const [visibleCards, setVisibleCards] = useState<ListItem[]>([]);
   const [deletedCards, setDeletedCards] = useState<DeletedListItem[]>([]);
+  const [isReveal, setReveal] = useState(false);
   const listQuery = useGetListData();
 
   const handleDeleteCard = (id: number) => {
@@ -21,8 +22,6 @@ export const Entrypoint = () => {
     });
 
     if (!deletedCard) return;
-
-console.log("", deletedCard);
 
     setDeletedCards(prevDeletedCards => [
       ...prevDeletedCards,
@@ -35,12 +34,14 @@ console.log("", deletedCard);
     ]);
 
     setVisibleCards(
-
-
       [...visibleCards].filter((card: DeletedListItem) => {
         return card.id !== id;
       })
     );
+  };
+
+  const handleReveal = () => {
+    setReveal(prev => !prev);
   };
 
   console.log("", deletedCards);
@@ -84,16 +85,26 @@ console.log("", deletedCard);
             Deleted Cards ({deletedCards.length})
           </h1>
           <button
-            disabled
+            disabled={deletedCards.length === 0 && true}
             className="text-white text-sm transition-colors hover:bg-gray-800 disabled:bg-black/75 bg-black rounded px-3 py-1"
+            onClick={handleReveal}
           >
-            Reveal
+            {!isReveal ? "Reveal" : "Revert"}{" "}
           </button>
         </div>
+
         <div className="flex flex-col gap-y-3">
-          {/* {deletedCards.map((card) => (
-            <Card key={card.id} card={card} />
-          ))} */}
+          {isReveal &&
+            deletedCards.map(card => (
+              <Card
+                key={card.id}
+                title={card.title}
+                description={card.description}
+                id={card.id}
+                handleDeleteCard={handleDeleteCard}
+                isReveal={isReveal}
+              />
+            ))}
         </div>
       </div>
     </div>
