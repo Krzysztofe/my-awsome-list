@@ -23,7 +23,7 @@ export const useGetListData = () => {
 
       const mockData = mockJson as Omit<ListItem, "isVisible">[];
 
-      return shuffle(mockData).map((item) => {
+      return shuffle(mockData).map(item => {
         return { ...item, isVisible: getRandom() > 50 ? true : false };
       });
     },
@@ -35,7 +35,7 @@ export const useGetListData = () => {
 const getRandom = () => Math.floor(Math.random() * 100);
 
 const sleep = (ms: number) => {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, ms));
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

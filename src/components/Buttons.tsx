@@ -1,26 +1,18 @@
 import { FC } from "react";
 import { XMarkIcon } from "./icons";
+import { useStore } from "../store";
 
-type ExpandButtonProps = {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+export const ExpandButton: FC<{
+  isOpenDescription: boolean;
+  toggleCardOpen: () => void;
   children: React.ReactNode;
-};
-
-export const ExpandButton: FC<ExpandButtonProps> = ({
-  isOpen,
-  setIsOpen,
-  children,
-  ...props
-}) => {
+}> = ({ isOpenDescription, toggleCardOpen, children, ...props }) => {
   return (
     <button
       className="hover:text-blue-700 transition-colors flex items-center justify-center"
-      onClick={() => {
-        setIsOpen(prev => !prev);
-      }}
+      onClick={toggleCardOpen}
       style={{
-        transform: isOpen ? "rotate(0deg)" : "rotate(180deg)",
+        transform: isOpenDescription ? "rotate(0deg)" : "rotate(180deg)",
         transition: "transform 0.3s",
       }}
       {...props}
@@ -32,18 +24,16 @@ export const ExpandButton: FC<ExpandButtonProps> = ({
 
 type DeleteButtonProps = {
   id: number;
-  handleDeleteCard: (id: number) => void;
 };
 
-export const DeleteButton: FC<DeleteButtonProps> = ({
-  id,
-  handleDeleteCard,
-}) => {
+export const DeleteButton: FC<DeleteButtonProps> = ({ id }) => {
+  const { deleteCard } = useStore();
+
   return (
     <button
       className="hover:text-gray-700 transition-colors flex items-center justify-center"
       onClick={() => {
-        handleDeleteCard(id);
+        deleteCard(id);
       }}
     >
       <XMarkIcon />
@@ -53,8 +43,7 @@ export const DeleteButton: FC<DeleteButtonProps> = ({
 
 type ToggleButtonProps = {
   isReveal: boolean;
-  deleteCardsLength: number;
-  handleReveal: () => void;
+  setReveal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const buttonGenericStyles =
@@ -62,12 +51,17 @@ const buttonGenericStyles =
 
 export const ToggleButton: FC<ToggleButtonProps> = ({
   isReveal,
-  deleteCardsLength,
-  handleReveal,
+  setReveal,
 }) => {
+  const { deletedCards } = useStore();
+
+  const handleReveal = () => {
+    setReveal(prev => !prev);
+  };
+
   return (
     <button
-      disabled={deleteCardsLength === 0 && true}
+      disabled={deletedCards.length === 0 && true}
       className={buttonGenericStyles}
       onClick={handleReveal}
     >

@@ -1,53 +1,22 @@
-import { useEffect, useState } from "react";
-import { ListItem, useGetListData } from "../api/getListData";
-import { Card } from "./List";
+import { useEffect } from "react";
+import { useGetListData } from "../api/getListData";
+import { useStore } from "../store";
+import AllCardsContainer from "./AllCardsContainer";
+import { RefreshButton } from "./Buttons";
+import DeletedCardsContainer from "./DeletedCardsContainer";
 import { Spinner } from "./Spinner";
-import { RefreshButton, ToggleButton } from "./Buttons";
-import AllCards from "./AllCards";
-import DeletedCards from "./DeletedCards";
+useStore;
 
-
-export type DeletedListItem = {
-  id: number;
-  title: string;
-  description: string;
-  isVisible: boolean;
-};
 
 export const Entrypoint = () => {
-  const [visibleCards, setVisibleCards] = useState<ListItem[]>([]);
-  const [deletedCards, setDeletedCards] = useState<DeletedListItem[]>([]);
   const listQuery = useGetListData();
-
-  // TOOD
-  // const deletedCards: DeletedListItem[] = [];
+  const { setVisibleCards } = useStore();
 
   useEffect(() => {
-    if (listQuery.isLoading) {
-      return;
+    if (!listQuery.isLoading && listQuery.data) {
+      setVisibleCards(listQuery.data?.filter(item => item.isVisible) ?? []);
     }
-
-    setVisibleCards(listQuery.data?.filter(item => item.isVisible) ?? []);
-  }, [listQuery.data, listQuery.isLoading]);
-
-
-  const handleDeleteCard = (id: number) => {
-    const deletedCard = [...visibleCards].find((card: DeletedListItem) => {
-      return card.id === id;
-    });
-
-    if (!deletedCard) return;
-
-    setDeletedCards(prevDeletedCards => [...prevDeletedCards, deletedCard]);
-
-    setVisibleCards(
-      [...visibleCards].filter((card: DeletedListItem) => {
-        return card.id !== id;
-      })
-    );
-  };
-
- 
+  }, [listQuery.data, listQuery.isLoading, setVisibleCards]);
 
   if (listQuery.isLoading) {
     return <Spinner />;
@@ -57,14 +26,8 @@ export const Entrypoint = () => {
     <div className="m-2">
       <RefreshButton />
       <div className="flex mt-5 gap-x-16">
-        <AllCards
-          visibleCards={visibleCards}
-          handleDeleteCard={handleDeleteCard}
-        />
-        <DeletedCards
-          deletedCards={deletedCards}
-          handleDeleteCard={handleDeleteCard}
-        />
+        <AllCardsContainer />
+        <DeletedCardsContainer />
       </div>
     </div>
   );

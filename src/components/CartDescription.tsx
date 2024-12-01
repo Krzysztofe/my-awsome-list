@@ -2,19 +2,22 @@ import { FC } from "react";
 
 type DescriptionProps = {
   description: string;
-  isOpen: boolean;
+  isOpenDescription: boolean;
 };
 
-const CartDescription: FC<DescriptionProps> = ({ description, isOpen }) => {
+const CartDescription: FC<DescriptionProps> = ({
+  description,
+  isOpenDescription,
+}) => {
   return (
     <div
       className="grid"
       style={{
-        gridTemplateRows: isOpen ? "1fr" : "0fr",
+        gridTemplateRows: isOpenDescription ? "1fr" : "0fr",
         transition: "grid-template-rows 0.5s",
       }}
     >
-      <p className="text-sm  overflow-hidden">{description}</p>
+      <p className="text-sm overflow-hidden">{description}</p>
     </div>
   );
 };

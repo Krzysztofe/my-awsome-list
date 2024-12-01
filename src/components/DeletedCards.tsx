@@ -1,51 +1,19 @@
-import { useState } from 'react';
-import { ToggleButton } from './Buttons';
-import { FC } from "react";
-import { DeletedListItem } from './Entrypoint';
-import { Card } from './List';
-import ListHeader from './ListHeader';
+import { useStore } from "../store";
 
-
-type DeletedCardsProps = {
-  deletedCards: DeletedListItem[];
-  handleDeleteCard: any;
-};
-
-
-const DeletedCards: FC<DeletedCardsProps> = ({
-  deletedCards,
-  handleDeleteCard,
-}) => {
-  const [isReveal, setReveal] = useState(false);
-
-  const handleReveal = () => {
-    setReveal(prev => !prev);
-  };
+const DeletedCards = () => {
+  const { deletedCards } = useStore();
 
   return (
-    <div className="w-full max-w-xl">
-      <div className="flex items-center justify-between">
-        <ListHeader text={"Deleted Cards"} counter={deletedCards.length} />
-        <ToggleButton
-          isReveal={isReveal}
-          deleteCardsLength={deletedCards.length}
-          handleReveal={handleReveal}
-        />
-      </div>
-
-      <div className="flex flex-col gap-y-3">
-        {isReveal &&
-          deletedCards.map(card => (
-            <Card
-              key={card.id}
-              title={card.title}
-              description={card.description}
-              id={card.id}
-              handleDeleteCard={handleDeleteCard}
-              isReveal={isReveal}
-            />
-          ))}
-      </div>
+    <div className="flex flex-col gap-y-3">
+      {deletedCards.map(card => {
+        return (
+          <div className="border border-black px-2 py-1.5 ">
+            <div className="flex justify-between mb-0.5">
+              <h1 className="font-medium">{card.title}</h1>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
