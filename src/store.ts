@@ -9,6 +9,7 @@ type State = {
 type Actions = {
   setVisibleCards: (cards: ListItem[]) => void;
   deleteCard: (id: number) => void;
+  clearDeletedCards: () => void;
 };
 
 export const useStore = create<State & Actions>(set => ({
@@ -28,4 +29,5 @@ export const useStore = create<State & Actions>(set => ({
         ],
       };
     }),
+  clearDeletedCards: () => set({ deletedCards: [] }),
 }));

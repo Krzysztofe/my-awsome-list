@@ -1,8 +1,10 @@
-import { FC, useState } from "react";
-import { DeleteButton, ExpandButton } from "./Buttons";
-import { ChevronUpIcon } from "./icons";
-import CartDescription from "./CartDescription";
-import { useStore } from "../store";
+import { useState } from "react";
+import { ChevronUpIcon } from "../icons";
+import { useStore } from "../../store";
+import CartDescription from "../CartDescription";
+import { DeleteButton, ExpandButton } from "../Buttons";
+
+
 
 export const AllCards = () => {
   const { visibleCards } = useStore();
@@ -22,7 +24,7 @@ export const AllCards = () => {
         return (
           <div key={card.id} className="border border-black px-2 py-1.5">
             <div className="flex justify-between mb-0.5">
-              <h1 className="font-medium">{card.title}</h1>
+              <h3 className="font-medium">{card.title}</h3>
 
               <div className="flex">
                 <ExpandButton

@@ -66,10 +66,19 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
       onClick={handleReveal}
     >
       {!isReveal ? "Reveal" : "Revert"}
+    
     </button>
   );
 };
 
-export const RefreshButton = () => {
-  return <button className={buttonGenericStyles}>Refresh</button>;
+type RefreshButtonProps = {
+  onRefresh: () => void;
+};
+
+export const RefreshButton: FC<RefreshButtonProps> = ({ onRefresh }) => {
+  return (
+    <button className={buttonGenericStyles} onClick={onRefresh}>
+      Refresh
+    </button>
+  );
 };
