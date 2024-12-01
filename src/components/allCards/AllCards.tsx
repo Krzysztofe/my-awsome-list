@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { ChevronUpIcon } from "../icons";
 import { useStore } from "../../store";
-import CartDescription from "../CartDescription";
 import { DeleteButton, ExpandButton } from "../Buttons";
+import CartDescription from "../CartDescription";
+import { ChevronUpIcon } from "../icons";
 
 
 
@@ -16,6 +16,8 @@ export const AllCards = () => {
       [id]: !prevState[id],
     }));
   };
+
+
 
   return (
     <div className="flex flex-col gap-y-3">

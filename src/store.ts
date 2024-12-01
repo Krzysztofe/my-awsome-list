@@ -23,10 +23,7 @@ export const useStore = create<State & Actions>(set => ({
       if (!cardToDelete) return state;
       return {
         visibleCards: state.visibleCards.filter(card => card.id !== id),
-        deletedCards: [
-          ...state.deletedCards,
-          { ...cardToDelete, description: undefined },
-        ],
+        deletedCards: [...state.deletedCards, { ...cardToDelete }],
       };
     }),
   clearDeletedCards: () => set({ deletedCards: [] }),
