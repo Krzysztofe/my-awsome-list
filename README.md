@@ -1,3 +1,7 @@
+Deploy - <a href = "https://startling-lamington-bb90a8.netlify.app/"> https://startling-lamington-bb90a8.netlify.app/ </a>
+
+
+
 ## Rules
 
 - add/remove/modify existing code to achieve the end result (some code needs a refactor)
