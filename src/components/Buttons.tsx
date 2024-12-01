@@ -57,7 +57,7 @@ type ToggleButtonProps = {
   handleReveal: () => void;
 };
 
-const genericButtonStyles =
+const buttonGenericStyles =
   "text-white text-sm transition-colors hover:bg-gray-800 disabled:bg-black/75 bg-black rounded px-3 py-1";
 
 export const ToggleButton: FC<ToggleButtonProps> = ({
@@ -68,7 +68,7 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
   return (
     <button
       disabled={deleteCardsLength === 0 && true}
-      className={genericButtonStyles}
+      className={buttonGenericStyles}
       onClick={handleReveal}
     >
       {!isReveal ? "Reveal" : "Revert"}
@@ -77,5 +77,5 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
 };
 
 export const RefreshButton = () => {
-  return <button className={genericButtonStyles}>Refresh</button>;
+  return <button className={buttonGenericStyles}>Refresh</button>;
 };
