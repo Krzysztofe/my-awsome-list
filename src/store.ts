@@ -4,7 +4,7 @@ import { ListItem, DeletedListItem } from "./api/getListData";
 type State = {
   visibleCards: ListItem[];
   deletedCards: DeletedListItem[];
-  isOpen: Record<number, boolean>;
+  isOpen: { [key: number]: boolean };
 };
 
 type Actions = {
