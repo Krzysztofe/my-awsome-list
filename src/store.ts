@@ -8,7 +8,8 @@ type State = {
 };
 
 type Actions = {
-  setVisibleCards: (cards: ListItem[]) => void;
+  setVisibleCards: (cardsToPrint: ListItem[]) => void;
+  setDeletedCards: (cardsToPrint: ListItem[]) => void;
   deleteCard: (id: number) => void;
   toggleCardOpen: (id: number) => void;
 };
@@ -18,7 +19,24 @@ export const useStore = create<State & Actions>(set => ({
   deletedCards: [],
   isOpen: {},
 
-  setVisibleCards: cards => set({ visibleCards: cards }),
+  setVisibleCards: (cardsToPrint: ListItem[]) => {
+    set(state => {
+      const deletedCardsIds = new Set(state.deletedCards.map(item => item.id));
+      const visibleCardsList = cardsToPrint.filter(
+        item => !deletedCardsIds.has(item.id)
+      );
+      return { visibleCards: visibleCardsList };
+    });
+  },
+  setDeletedCards: (cardsToPrint: ListItem[]) => {
+    set(state => {
+      const visibleCardsIds = new Set(state.visibleCards.map(item => item.id));
+      const deletedCardsList = cardsToPrint.filter(
+        item => !visibleCardsIds.has(item.id)
+      );
+      return { deletedCards: deletedCardsList };
+    });
+  },
   deleteCard: id =>
     set(state => {
       const cardToDelete = state.visibleCards.find(card => card.id === id);
@@ -36,3 +54,4 @@ export const useStore = create<State & Actions>(set => ({
       },
     })),
 }));
+

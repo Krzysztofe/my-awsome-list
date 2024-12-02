@@ -1,7 +1,7 @@
-import { AllCards } from "./AllCards";
-import ListHeader from "../ListHeader";
 import { useStore } from "../../store";
 import CardsColumnContainer from "../CardsColumnContainer";
+import ListHeader from "../ListHeader";
+import { AllCards } from "./AllCards";
 
 const AllCardsContainer = () => {
   const { visibleCards } = useStore();

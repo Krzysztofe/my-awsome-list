@@ -2,20 +2,23 @@ import { FC } from "react";
 import { XMarkIcon, RevertIcon } from "./icons";
 import { useStore } from "../store";
 
-export const ExpandButton: FC<{
-  isOpenDescription: boolean;
-  toggleCardOpen: () => void;
+type ExpandButtonProps = {
+  id: number;
   children: React.ReactNode;
-}> = ({ isOpenDescription, toggleCardOpen, children, ...props }) => {
+};
+
+export const ExpandButton: FC<ExpandButtonProps> = ({ id, children }) => {
+  const { isOpen, toggleCardOpen } = useStore();
+
+  const isUp = isOpen[id] || false;
   return (
     <button
       className="hover:text-blue-700 transition-colors flex items-center justify-center"
-      onClick={toggleCardOpen}
+      onClick={() => toggleCardOpen(id)}
       style={{
-        transform: isOpenDescription ? "rotate(0deg)" : "rotate(180deg)",
+        transform: isUp ? "rotate(0deg)" : "rotate(180deg)",
         transition: "transform 0.3s",
       }}
-      {...props}
     >
       {children}
     </button>
@@ -55,18 +58,13 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
 }) => {
   const { deletedCards } = useStore();
 
-  const handleReveal = () => {
-    setReveal(prev => !prev);
-  };
-
   return (
     <button
       disabled={deletedCards.length === 0 && true}
       className={buttonGenericStyles}
-      onClick={handleReveal}
+      onClick={() => setReveal(prev => !prev)}
     >
       {!isReveal ? "Reveal" : "Close"}
-    
     </button>
   );
 };
@@ -83,10 +81,9 @@ export const RefreshButton: FC<RefreshButtonProps> = ({ onRefresh }) => {
   );
 };
 
-
 export const ReverthButton = () => {
   return (
-    <button className={`${buttonGenericStyles} h-7`}>
+    <button className={`${buttonGenericStyles} h-7 ml-1`}>
       <RevertIcon />
     </button>
   );

@@ -1,12 +1,12 @@
 import { useStore } from "../../store";
 import { DeleteButton, ExpandButton } from "../Buttons";
-import CartDescription from "../CartDescription";
+import CartDescription from "./CartDescription";
 import { ChevronUpIcon } from "../icons";
 
 
 
 export const AllCards = () => {
-  const { visibleCards, isOpen, toggleCardOpen } = useStore();
+  const { visibleCards, isOpen } = useStore();
 
   return (
     <div className="flex flex-col gap-y-3">
@@ -19,8 +19,7 @@ export const AllCards = () => {
 
               <div className="flex">
                 <ExpandButton
-                  isOpenDescription={isOpenDescription}
-                  toggleCardOpen={() => toggleCardOpen(card.id)}
+                  id={card.id}
                 >
                   <ChevronUpIcon />
                 </ExpandButton>
