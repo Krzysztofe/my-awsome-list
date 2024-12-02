@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { XMarkIcon } from "./icons";
+import { XMarkIcon, RevertIcon } from "./icons";
 import { useStore } from "../store";
 
 export const ExpandButton: FC<{
@@ -65,7 +65,7 @@ export const ToggleButton: FC<ToggleButtonProps> = ({
       className={buttonGenericStyles}
       onClick={handleReveal}
     >
-      {!isReveal ? "Reveal" : "Revert"}
+      {!isReveal ? "Reveal" : "Close"}
     
     </button>
   );
@@ -79,6 +79,15 @@ export const RefreshButton: FC<RefreshButtonProps> = ({ onRefresh }) => {
   return (
     <button className={buttonGenericStyles} onClick={onRefresh}>
       Refresh
+    </button>
+  );
+};
+
+
+export const ReverthButton = () => {
+  return (
+    <button className={`${buttonGenericStyles} h-7`}>
+      <RevertIcon />
     </button>
   );
 };

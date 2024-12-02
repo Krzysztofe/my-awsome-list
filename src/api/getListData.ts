@@ -23,11 +23,14 @@ export const useGetListData = () => {
 
       const mockData = mockJson as Omit<ListItem, "isVisible">[];
 
-      return shuffle(mockData).map(item => {
+      const mix = shuffle(mockData).map(item => {
         return { ...item, isVisible: getRandom() > 50 ? true : false };
       });
+
+      return mix
     },
   });
+
 
   return query;
 };

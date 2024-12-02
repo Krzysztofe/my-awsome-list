@@ -4,17 +4,19 @@ import { ListItem, DeletedListItem } from "./api/getListData";
 type State = {
   visibleCards: ListItem[];
   deletedCards: DeletedListItem[];
+  isOpen: Record<number, boolean>;
 };
 
 type Actions = {
   setVisibleCards: (cards: ListItem[]) => void;
   deleteCard: (id: number) => void;
-  clearDeletedCards: () => void;
+  toggleCardOpen: (id: number) => void;
 };
 
 export const useStore = create<State & Actions>(set => ({
   visibleCards: [],
   deletedCards: [],
+  isOpen: {},
 
   setVisibleCards: cards => set({ visibleCards: cards }),
   deleteCard: id =>
@@ -26,5 +28,11 @@ export const useStore = create<State & Actions>(set => ({
         deletedCards: [...state.deletedCards, { ...cardToDelete }],
       };
     }),
-  clearDeletedCards: () => set({ deletedCards: [] }),
+  toggleCardOpen: id =>
+    set(state => ({
+      isOpen: {
+        ...state.isOpen,
+        [id]: !state.isOpen[id],
+      },
+    })),
 }));
