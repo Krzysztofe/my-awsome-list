@@ -5,6 +5,7 @@ import AllCardsContainer from "./allCards/AllCardsContainer";
 import { RefreshButton } from "./Buttons";
 import DeletedCardsContainer from "./deletedCards/DeletedCardsContainer";
 import { Spinner } from "./Spinner";
+import ErrorPage from "./ErrorPage";
 
 export const Entrypoint = () => {
   const listQuery = useGetListData();
@@ -21,6 +22,10 @@ export const Entrypoint = () => {
 
   if (listQuery.isFetching) {
     return <Spinner />;
+  }
+
+  if (listQuery.isError) {
+    return <ErrorPage />;
   }
 
   return (
