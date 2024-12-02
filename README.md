@@ -1,4 +1,4 @@
-Deploy - <a href = "https://startling-lamington-bb90a8.netlify.app/"> https://startling-lamington-bb90a8.netlify.app/ </a>
+Deploy - <a href = "https://beautiful-blini-d6d4aa.netlify.app/"> https://beautiful-blini-d6d4aa.netlify.app/ </a>
 
 
 
