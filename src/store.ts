@@ -21,19 +21,21 @@ export const useStore = create<State & Actions>(set => ({
 
   setVisibleCards: (cardsToPrint: ListItem[]) => {
     set(state => {
-      const deletedCardsIds = new Set(state.deletedCards.map(item => item.id));
+      const deletedCardsIds = state.deletedCards.map(item => item.id);
       const visibleCardsList = cardsToPrint.filter(
-        item => !deletedCardsIds.has(item.id)
+        item => !deletedCardsIds.includes(item.id)
       );
+
       return { visibleCards: visibleCardsList };
     });
   },
   setDeletedCards: (cardsToPrint: ListItem[]) => {
     set(state => {
-      const visibleCardsIds = new Set(state.visibleCards.map(item => item.id));
+      const visibleCardsIds = state.visibleCards.map(item => item.id);
       const deletedCardsList = cardsToPrint.filter(
-        item => !visibleCardsIds.has(item.id)
+        item => !visibleCardsIds.includes(item.id)
       );
+
       return { deletedCards: deletedCardsList };
     });
   },
@@ -54,4 +56,3 @@ export const useStore = create<State & Actions>(set => ({
       },
     })),
 }));
-
