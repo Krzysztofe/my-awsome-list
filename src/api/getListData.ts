@@ -10,39 +10,49 @@ export type ListItem = {
 
 export type DeletedListItem = Omit<ListItem, "description">;
 
+const LIST_QUERY_KEY = ["list"];
+
 export const useGetListData = () => {
   const query = useQuery({
-    queryKey: ["list"],
+    queryKey: LIST_QUERY_KEY,
     queryFn: async () => {
-      await sleep(1000);
+      try {
+        await sleep(1000);
 
-      const mockData = mockJson as Omit<ListItem, "isVisible">[];
+        const mockData: Omit<ListItem, "isVisible">[] = mockJson;
 
-      const mix = shuffle(mockData).map(item => {
-        return { ...item, isVisible: getRandom() > 50 ? true : false };
-      });
-
-      return mix
+        return shuffle(mockData).map(addVisibilityFlag);
+      } catch (error) {
+        console.error("An unexpected error occurred!");
+        throw new Error("👀");
+      }
     },
   });
-
 
   return query;
 };
 
-const getRandom = () => Math.floor(Math.random() * 100);
+const getRandomBoolean = () => Math.random() > 0.5;
 
-const sleep = (ms: number) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
+const addVisibilityFlag = <T extends object>(
+  item: T
+): T & { isVisible: boolean } => ({
+  ...item,
+  isVisible: getRandomBoolean(),
+});
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const shuffle = <T extends any[]>(array: T): T => {
-  for (let i = array.length - 1; i >= 0; i--) {
+  const copy = [...array] as T;
+
+  for (let i = copy.length - 1; i >= 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+    const temp = copy[i];
+    copy[i] = copy[j];
+    copy[j] = temp;
   }
-  return array;
+  return copy;
 };
+

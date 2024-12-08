@@ -24,7 +24,7 @@ export const Entrypoint = () => {
     return <Spinner />;
   }
 
-  if (listQuery.isError) {
+  if (listQuery.error) {
     return <ErrorPage />;
   }
 
