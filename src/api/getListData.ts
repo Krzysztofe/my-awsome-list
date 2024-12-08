@@ -18,13 +18,13 @@ export const useGetListData = () => {
     queryFn: async () => {
       try {
         await sleep(1000);
-
+        if (!mockJson) {
+          throw new Error("👀");
+        }
         const mockData: Omit<ListItem, "isVisible">[] = mockJson;
-
         return shuffle(mockData).map(addVisibilityFlag);
       } catch (error) {
-        console.error("An unexpected error occurred!");
-        throw new Error("👀");
+        console.error("An unexpected error occurred!", error);
       }
     },
   });
@@ -55,4 +55,3 @@ const shuffle = <T extends any[]>(array: T): T => {
   }
   return copy;
 };
-
